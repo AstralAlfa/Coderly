@@ -11,3 +11,45 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum ProjectStatus {
+    IDEA
+    IN_PROGRESS
+    DONE
+}
+
+model User {
+    id        String   @id @default(uuid())
+    email     String   @unique
+    password  String 
+    username  String   @unique
+    bio       String?
+    githubUrl String?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    projects  Project[]
+}
+
+model Project {
+    id          String        @id @default(uuid())
+    title       String
+    description String
+    status      ProjectStatus @default(IDEA)
+    githubUrl   String?
+    demoUrl     String?
+    createdAt   DateTime      @default(now())
+    updatedAt   DateTime      @updatedAt
+
+    owner       User          @relation(fields: [ownerId], references: [id])
+    ownerId     String
+
+    tags        Tag[]         @relation("ProjectTags")
+}
+
+model Tag {
+    id       String    @id @default(uuid())
+    name     String    @unique
+
+    projects Project[] @relation("ProjectTags")
+}
