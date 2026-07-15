@@ -1,10 +1,10 @@
 {
-  "name": "nest-app",
+  "name": "Coderly",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "RU: Платформа для поиска единомышленников по pet-проектам и стартап-идеям. EN: A platform for finding like-minded people for pet projects and startup ideas.",
+  "author": "AstralAlfa",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -23,6 +23,7 @@
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
     "@nestjs/jwt": "^11.0.2",
+    "@nestjs/mapped-types": "^2.1.1",
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-fastify": "^11.1.28",
     "@prisma/client": "^6.19.3",
@@ -81,5 +82,8 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }
