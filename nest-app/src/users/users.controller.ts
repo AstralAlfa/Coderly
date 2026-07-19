@@ -10,6 +10,13 @@ import { UseGuards } from '@nestjs/common';
 export class UsersController {
     constructor(private usersService: UsersService) {}
 
+    @UseGuards(JwtAuthGuard)
+    @Get('me')
+    async getMe(@Req() req: AuthenticatedRequest) {
+        const user = await this.usersService.findById(req.user.id);
+        return new UserEntity(user);
+    }
+
     @Get(':username')
     async getProfile(@Param('username') username: string) {
         const user = await this.usersService.findByUsername(username);
