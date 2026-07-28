@@ -41,6 +41,25 @@ export class UsersService {
         });
     }
 
+    async findByVerificationToken(token: string) {
+        return this.prisma.user.findFirst({
+            where: {
+                verificationToken: token,
+            },
+        });
+    }
+
+    async markAsVerified(id: string) {
+        return this.prisma.user.update({
+            where: { id },
+            data: {
+                isVerified: true,
+                verificationToken: null,
+                verificationTokenExpiresAt: null,
+            },
+        });
+    }
+
     async update(id: string, dto: UpdateUserDto) {
         return this.prisma.user.update({
             where: { id },

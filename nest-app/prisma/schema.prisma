@@ -19,14 +19,17 @@ enum ProjectStatus {
 }
 
 model User {
-    id        String   @id @default(uuid())
-    email     String   @unique
-    password  String 
-    username  String   @unique
-    bio       String?
-    githubUrl String?
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    id                         String   @id @default(uuid())
+    email                      String   @unique
+    password                   String 
+    username                   String   @unique
+    bio                        String?
+    githubUrl                  String?
+    isVerified                 Boolean  @default(false)
+    verificationToken          String? @unique
+    verificationTokenExpiresAt DateTime?
+    createdAt                  DateTime @default(now())
+    updatedAt                  DateTime @updatedAt
 
     projects  Project[]
 }

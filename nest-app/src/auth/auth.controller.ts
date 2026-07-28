@@ -6,6 +6,8 @@ import {
     Req,
     HttpCode,
     HttpStatus,
+    Get,
+    Query,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
@@ -19,6 +21,11 @@ export class AuthController {
     @Post('register')
     async register(@Body() dto: RegisterDto) {
         return this.authService.register(dto);
+    }
+
+    @Get('verify-email')
+    async verifyEmail(@Query('token') token: string) {
+        return this.authService.verifyEmail(token);
     }
 
     @UseGuards(LocalAuthGuard)

@@ -26,6 +26,11 @@ async function bootstrap(): Promise<void> {
         new ClassSerializerInterceptor(app.get(Reflector)),
     );
 
+    app.enableCors({
+        origin: 'http://localhost:5173',
+        methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT', 'OPTIONS'],
+    });
+
     await app.listen(process.env.PORT ?? 3000);
 }
 
