@@ -21,4 +21,14 @@ export class UpdateUserDto {
     @IsOptional()
     @IsUrl()
     githubUrl?: string;
+
+    @IsOptional()
+    @IsString()
+    @MaxLength(20)
+    phone?: string;
+
+    @IsOptional()
+    @IsString()
+    @MaxLength(32)
+    telegramUsername?: string;
 }

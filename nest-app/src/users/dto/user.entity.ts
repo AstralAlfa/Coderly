@@ -10,6 +10,12 @@ export class UserEntity {
     updatedAt!: Date;
 
     @Exclude()
+    phone!: string;
+
+    @Exclude()
+    telegramUsername!: string;
+
+    @Exclude()
     password!: string;
 
     constructor(partial: Partial<UserEntity>) {
