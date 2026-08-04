@@ -10,10 +10,10 @@ export class UserEntity {
     updatedAt!: Date;
 
     @Exclude()
-    phone!: string;
+    phone!: string | null;
 
     @Exclude()
-    telegramUsername!: string;
+    telegramUsername!: string | null;
 
     @Exclude()
     password!: string;

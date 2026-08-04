@@ -19,6 +19,15 @@ export class ContactRequestsService {
             );
         }
 
+        const requester = await this.prisma.user.findUnique({
+            where: { id: requesterId },
+        });
+        if (!requester?.phone && !requester?.telegramUsername) {
+            throw new BadRequestException(
+                'Заполните хотя бы один контакт (телефон или Телеграм) в профиле, прежде чем отправлять запросы',
+            );
+        }
+
         const recipient = await this.prisma.user.findUnique({
             where: { id: recipientId },
         });

@@ -14,7 +14,8 @@ export class UsersController {
     @Get('me')
     async getMe(@Req() req: AuthenticatedRequest) {
         const user = await this.usersService.findById(req.user.id);
-        return new UserEntity(user);
+        delete (user as { password?: string }).password;
+        return user;
     }
 
     @Get(':username')
