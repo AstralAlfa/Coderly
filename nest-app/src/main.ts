@@ -7,12 +7,23 @@ import {
 } from '@nestjs/platform-fastify';
 import { ClassSerializerInterceptor } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import helmet from '@fastify/helmet';
+import rateLimit from '@fastify/rate-limit';
 
 async function bootstrap(): Promise<void> {
     const app = await NestFactory.create<NestFastifyApplication>(
         AppModule,
-        new FastifyAdapter(),
+        new FastifyAdapter({
+            bodyLimit: 1024 * 1024,
+        }),
     );
+
+    await app.register(helmet);
+
+    await app.register(rateLimit, {
+        max: 100,
+        timeWindow: '1 minute',
+    });
 
     app.useGlobalPipes(
         new ValidationPipe({
@@ -27,8 +38,10 @@ async function bootstrap(): Promise<void> {
     );
 
     app.enableCors({
-        origin: 'http://localhost:5173',
+        origin: process.env.FRONTEND_URL,
+        credentials: true,
         methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT', 'OPTIONS'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
     });
 
     await app.listen(process.env.PORT ?? 3000);
